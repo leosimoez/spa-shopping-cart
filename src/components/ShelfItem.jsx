@@ -112,4 +112,4 @@ const ShelfIItem = props => {
 
 }
 
-export default withRouter(withStyles(useStyles)(ShelfIItem));
+export default withRouter((ShelfIItem));

@@ -15,9 +15,12 @@ export default (state = INITIAL_STATE, action) => {
     case 'MAIN_PRODUCTS_FETCHED':
       return { ...state, productsList: action.payload.data }
     case 'BASKET_CREATED':
-      sessionStorage.setItem('@spa-shopping-cart/basketId', action.payload.data.id)
+      localStorage.setItem('@spa-shopping-cart/basketId', action.payload.data.id)
       return { ...state, basket: action.payload.data }
     case 'BASKET_FETCHED':
+      console.log("basket-fetched")
+      console.log(action)
+      localStorage.setItem('@spa-shopping-cart/basketId', action.payload.data.id)
       return { ...state, basket: action.payload.data }
     // case 'BASKET_ITEM_CHANGED':
     //   return { ...state, basket: action.payload.data }

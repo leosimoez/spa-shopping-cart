@@ -16,8 +16,9 @@ export function readBasket(basketId) {
 
 export function createBasket() {
 
-  const basketId = sessionStorage.getItem('@spa-shopping-cart/basketId')
+  const basketId = localStorage.getItem('@spa-shopping-cart/basketId')
   let request
+  console.log(basketId)
   if (basketId) {
     request = axios.get(`${BASKET_BASE_URL}/basket/${basketId}`)
   } else {

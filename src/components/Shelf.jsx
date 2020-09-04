@@ -65,4 +65,4 @@ const Shelf = props => {
   // }
 }
 
-export default withRouter(withStyles(styles)(Shelf));
+export default withRouter((Shelf));

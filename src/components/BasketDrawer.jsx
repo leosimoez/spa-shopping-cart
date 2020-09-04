@@ -13,6 +13,9 @@ import BasketItem from './BasketItem';
 import { bindActionCreators } from 'redux'
 import { connect } from "react-redux";
 import { basketAddItem, basketRemoveItem } from './MainActions';
+import { Link } from 'react-router-dom';
+import Button from '@material-ui/core/Button';
+
 
 const styles = makeStyles((theme) => ({
 
@@ -132,9 +135,11 @@ const BasketDrawer = props => {
           ))}
           </div>
         </div>
-        <div className={classes.checkout}>
-          checkout
-          </div>
+        {/* <div className={classes.checkout}> */}
+        <Button color="secondary" component={Link} to="/checkout">
+          do checkout
+        </Button>
+          {/* </div> */}
       </Drawer>
     </React.Fragment >
   );

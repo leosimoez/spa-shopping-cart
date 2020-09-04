@@ -2,27 +2,56 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
-import { applyMiddleware, createStore } from 'redux';
-import promise from 'redux-promise'
-import multi from 'redux-multi'
-import thunk from 'redux-thunk'
+// import { applyMiddleware, createStore } from 'redux';
+// import promise from 'redux-promise'
+// import multi from 'redux-multi'
+// import thunk from 'redux-thunk'
 import { Provider } from 'react-redux';
-import reducers from './main/reducers'
+// import reducers from './main/reducers'
 import * as serviceWorker from './serviceWorker';
+//
+import configureStore from "./configureStore";
+import { OidcProvider } from "redux-oidc";
+import userManager from "./userManager";
+import { createBrowserHistory } from "history";
+import { ConnectedRouter } from "react-router-redux";
+
+// Create browser history to use in the Redux store
+// const baseUrl = (document.getElementsByTagName("base")[0] || {}).href;
+const baseUrl = '/';
+const history = createBrowserHistory({ basename: baseUrl });
+
+// Get the application-wide store instance, prepopulating with state from the server where available.
+const initialState = window.initialReduxState;
+const store = configureStore(history, initialState);
+
+const rootElement = document.getElementById("root");
+
+ReactDOM.render(
+  <Provider store={store}>
+    <OidcProvider store={store} userManager={userManager}>
+      <ConnectedRouter history={history}>
+        <App />
+      </ConnectedRouter>
+    </OidcProvider>
+  </Provider>,
+  rootElement
+);
 
 const devTools = window.__REDUX_DEVTOOLS_EXTENSION___ && window.__REDUX_DEVTOOLS_EXTENSION___()
 
 // const store = createStore(reducers)
-const store = applyMiddleware(thunk, multi, promise)(createStore)(reducers, devTools)
+// const store = applyMiddleware(thunk, multi, promise)(createStore)(reducers, devTools)
+
  
-ReactDOM.render(
-  <Provider store={store}>
-    <React.StrictMode>
-      <App />
-    </React.StrictMode>
-  </Provider>,
-  document.getElementById('root')
-);
+// ReactDOM.render(
+//   <Provider store={store}>
+//     <React.StrictMode>
+//       <App />
+//     </React.StrictMode>
+//   </Provider>,
+//   document.getElementById('root')
+// );
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.

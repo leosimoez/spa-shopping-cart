@@ -1,18 +1,22 @@
 import React from 'react'
-import { Route, HashRouter, Switch } from 'react-router-dom'
+import { Route, HashRouter, Switch } from 'react-router'
 import Main from './components/Main'
+import Checkout from './components/Checkout'
+import CallbackPage from './components/CallbackPage'
+import LoginPage from './components/LoginPage'
+import LogoutPage from './components/LogoutPage'
+
 
 export default props => (
-    <HashRouter>
-      {/* <ScrollToTop> */}
-        <Switch>
-          <Route exact path='/' component={ Main } />
-          {/* <Route exact path='/cart' component={ BasketDrawer } /> */}
-          {/* <Route exact path='/dashboard' component={ Dashboard } />
-          <Route exact path='/signup' component={ Signup } />
-          <Route exact path='/wizard' component={ Wizard } />
-          <Route exact path='/cards' component={ Cards } /> */}
-        </Switch>
-      {/* </ScrollToTop> */}
-    </HashRouter>
-  )
+  <React.Fragment>
+    {/* <HashRouter>
+        <Switch> */}
+    <Route exact path='/' component={Main} />
+    <Route exact path='/checkout' component={Checkout} />
+    <Route path="/callback" component={CallbackPage} />
+    <Route path="/login" component={LoginPage} />
+    <Route path="/logout" component={LogoutPage} />
+    {/* </Switch>
+    </HashRouter> */}
+  </React.Fragment>
+)

@@ -9,11 +9,14 @@ import Typography from '@material-ui/core/Typography';
 import InputBase from '@material-ui/core/InputBase';
 import Badge from '@material-ui/core/Badge';
 import MenuItem from '@material-ui/core/MenuItem';
+// import Link from '@material-ui/core/Link';
+import { Link } from 'react-router-dom';
 import Menu from '@material-ui/core/Menu';
 import MenuIcon from '@material-ui/icons/Menu';
 import SearchIcon from '@material-ui/icons/Search';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import ShoppingBasketIcon from '@material-ui/icons/ShoppingBasket';
+import { connect } from "react-redux";
 
 const useStyles = makeStyles((theme) => ({
   grow2: {
@@ -82,17 +85,21 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Navbar = props => {
+
+  const { oidc } = props;
+  const userLoggedIn = oidc.user;
+
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
-  
+
   const [search, setSearch] = React.useState('');
   const handleChangeSearch = (event) => {
-      setSearch(event.target.value);
-    }
+    setSearch(event.target.value);
+  }
 
   const handleDoSearch = (event) => {
-    if(event.key === 'Enter'){
-      if(search.length >= 3 || search.length === 0) {
+    if (event.key === 'Enter') {
+      if (search.length >= 3 || search.length === 0) {
         props.doSearch(search);
       }
     }
@@ -119,8 +126,13 @@ const Navbar = props => {
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
-      <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
-      <MenuItem onClick={handleMenuClose}>My account</MenuItem>
+      {!userLoggedIn ? (
+        <MenuItem><Link to="/login">Login</Link></MenuItem>
+      ) : (
+        <MenuItem><Link to="/logout">Logout</Link></MenuItem>
+        )}
+      {/* <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
+      <MenuItem onClick={handleMenuClose}>My account</MenuItem> */}
     </Menu>
   );
 
@@ -128,7 +140,7 @@ const Navbar = props => {
     <div className={classes.grow2}>
       <AppBar position="static" className={classes.appBar}>
         <Toolbar>
-        <div className={classes.grow} />
+          <div className={classes.grow} />
           <IconButton
             edge="start"
             className={classes.menuButton}
@@ -184,4 +196,12 @@ const Navbar = props => {
     </div>
   );
 }
-export default withRouter(withStyles(useStyles)(Navbar));
+
+function mapStateToProps(state) {
+  return {
+    oidc: state.oidc
+  };
+}
+// export default withRouter(withStyles(useStyles)(Navbar));
+// export default withRouter((Navbar));
+export default connect(mapStateToProps)(Navbar);

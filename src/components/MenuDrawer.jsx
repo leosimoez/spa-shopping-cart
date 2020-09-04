@@ -110,4 +110,5 @@ const MenuDrawer = props => {
   );
 }
 
-export default withRouter(withStyles(styles)(MenuDrawer));
+// export default withRouter(withStyles(styles)(MenuDrawer));
+export default withRouter((MenuDrawer));
